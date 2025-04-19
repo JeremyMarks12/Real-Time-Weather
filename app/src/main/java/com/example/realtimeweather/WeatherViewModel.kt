@@ -1,6 +1,6 @@
 package com.example.realtimeweather
 
-import android.util.Log // testing ran into issues.
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +16,9 @@ class WeatherViewModel : ViewModel() {
 
     private val _weather = MutableLiveData<WeatherData>()
     val weather: LiveData<WeatherData> = _weather
+
+    private val _forecast = MutableLiveData<List<DailyForecastItem>>()
+    val forecast: LiveData<List<DailyForecastItem>> = _forecast
 
     private val apiKey = "0789c32f478ef89e788a6df16db179c0"
 
@@ -36,11 +39,23 @@ class WeatherViewModel : ViewModel() {
                 val response = weatherApi.getCurrentWeather(cityName = city, apiKey = apiKey)
                 _weather.postValue(response)
             } catch (e: Exception) {
-                Log.e("WeatherViewModel", "API call failed: ${e.message}", e)
+                Log.e("WeatherViewModel", "Current weather API call failed: ${e.message}", e)
             }
         }
     }
 
-
+    fun fetchForecast(zipCode: String) {
+        viewModelScope.launch {
+            try {
+                val response = weatherApi.getDailyForecastByZip(zipCode = zipCode, apiKey = apiKey)
+                _forecast.postValue(response.list)
+            } catch (e: Exception) {
+                Log.e("WeatherViewModel", "Forecast API call failed: ${e.message}", e)
+            }
+        }
+    }
 }
+
+
+
 
