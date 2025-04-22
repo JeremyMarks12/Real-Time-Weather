@@ -5,8 +5,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
 }
 
-
-
 android {
     namespace = "com.example.realtimeweather"
     compileSdk = 35
@@ -30,20 +28,22 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -60,30 +60,36 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // For Serialization
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
-    // ViewModel + LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
-
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation("androidx.compose.foundation:foundation:1.6.0")
+
     implementation("androidx.compose.ui:ui-text:1.6.0")
 
-    implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    implementation("androidx.core:core-ktx:1.12.0")
 
+    implementation("androidx.core:core:1.12.0")
 
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
-
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
 
 }
