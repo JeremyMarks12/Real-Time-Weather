@@ -4,6 +4,10 @@
     <string name="enter_zip_code">Enter Zip Code</string>
     <string name="get_weather">Get Weather</string>
     <string name="invalid_zip">Enter a valid 5-digit zip code</string>
+    <string name="use_my_location">Use My Location</string>
+    <string name="location_permission_denied">Location permission was denied.</string>
+    <string name="notification_permission_denied">Notification permission was denied.</string>
+    <string name="fetching_location">Fetching location...</string>
     <string name="today_label">Today</string>
     <string name="sixteen_day_label">16 days ></string>
     <string name="city_label">%1$s, %2$s</string>
@@ -13,10 +17,15 @@
     <string name="high_label">High %1$.0f°</string>
     <string name="humidity_label">Humidity %1$d%%</string>
     <string name="pressure_label">Pressure %1$d hPa</string>
+    <string name="weather_icon">Weather Icon</string>
     <string name="forecast_screen_title">16-Day Forecast</string>
     <string name="condition_label">Condition: %1$s</string>
     <string name="temp_range">High: %1$d°  Low: %2$d°</string>
-    <string name="weather_icon">Weather Icon</string>
+    <string name="notification_channel_name">Weather Updates</string>
+    <string name="notification_channel_description">Displays the current weather as a persistent notification.</string>
+    <string name="notification_title">Current Weather</string>
+    <string name="notification_content">%1$s: %2$.0f°F, %3$s</string>
 </resources>
+
 
 

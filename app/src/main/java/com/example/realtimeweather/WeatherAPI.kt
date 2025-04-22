@@ -18,6 +18,24 @@ interface WeatherAPI {
         @Query("cnt") cnt: Int = 16,
         @Query("units") unit: String = "imperial"
     ): DailyForecastResponse
+
+    @GET("data/2.5/weather")
+    suspend fun getCurrentWeatherByCoordinates(
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("appid") apiKey: String,
+        @Query("units") unit: String = "imperial"
+    ): WeatherData
+
+    @GET("data/2.5/forecast/daily")
+    suspend fun getDailyForecastByCoordinates(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") apiKey: String,
+        @Query("units") unit: String = "imperial"
+    ): DailyForecastResponse
+
+
 }
 
 
