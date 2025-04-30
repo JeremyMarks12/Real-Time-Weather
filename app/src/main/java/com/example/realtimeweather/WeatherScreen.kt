@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -93,7 +93,9 @@ fun WeatherAppScreen(
                         },
                         label = { Text(stringResource(R.string.enter_zip_code)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f)
+                            .testTag("zipInputField"),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color.White,
                             unfocusedBorderColor = Color.Gray,
@@ -218,23 +220,25 @@ fun WeatherAppScreen(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
-                            TextButton(onClick = {
-                                if (zipCode.length == 5) {
-                                    viewModel.setZipForForecast("$zipCode,us")
-                                    navController.navigate("forecast")
-                                } else {
-                                    val (lat, lon) = viewModel.getCurrentCoordinates()
-                                    if (lat != null && lon != null) {
-                                        viewModel.setCoordinatesForForecast(lat, lon)
+                            TextButton(
+                                onClick = {
+                                    if (zipCode.length == 5) {
+                                        viewModel.setZipForForecast("$zipCode,us")
                                         navController.navigate("forecast")
                                     } else {
-                                        Toast.makeText(context, context.getString(R.string.invalid_zip), Toast.LENGTH_SHORT).show()
+                                        val (lat, lon) = viewModel.getCurrentCoordinates()
+                                        if (lat != null && lon != null) {
+                                            viewModel.setCoordinatesForForecast(lat, lon)
+                                            navController.navigate("forecast")
+                                        } else {
+                                            Toast.makeText(context, context.getString(R.string.invalid_zip), Toast.LENGTH_SHORT).show()
+                                        }
                                     }
-                                }
-                            }) {
+                                },
+                                modifier = Modifier.testTag("sixteenDayButton")
+                            ) {
                                 Text(stringResource(R.string.sixteen_day_label), color = Color.White)
                             }
-
                         }
 
                         Row(
@@ -255,8 +259,6 @@ fun WeatherAppScreen(
                             }
                         }
                     }
-                } else {
-                    CircularProgressIndicator(color = Color.White)
                 }
             }
         }
@@ -278,6 +280,8 @@ fun getWeatherIconResource(description: String): Int {
         else -> R.drawable.sunny
     }
 }
+
+
 
 
 

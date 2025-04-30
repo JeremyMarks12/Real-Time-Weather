@@ -5,13 +5,10 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivity (4)">
+      <SelectionState runConfigName="WeatherAppScreenTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivity (5)">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="MainActivity (2)">
+      <SelectionState runConfigName="ForecastScreenTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="MainActivity (1)">

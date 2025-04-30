@@ -99,10 +99,10 @@ class LocationWeatherService : Service() {
                         apiKey = apiKey
                     )
 
-                    // Use shared notification helper to build and show it
+
                     NotificationHelp.showWeatherNotification(this@LocationWeatherService, response)
 
-                    // Retrieve the built notification from NotificationManager
+
                     val notification = NotificationCompat.Builder(this@LocationWeatherService, "weather_channel")
                         .setContentTitle(getString(R.string.notification_title))
                         .setContentText(
