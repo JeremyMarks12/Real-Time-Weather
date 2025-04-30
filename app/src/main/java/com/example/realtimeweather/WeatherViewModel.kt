@@ -22,6 +22,29 @@ class WeatherViewModel : ViewModel() {
 
     private val apiKey = "0789c32f478ef89e788a6df16db179c0"
 
+    private var zipCode: String? = null
+    private var coordinates: Pair<Double, Double>? = null
+
+    fun setZipForForecast(zip: String) {
+        zipCode = zip
+        coordinates = null
+    }
+
+    fun setCoordinatesForForecast(lat: Double, lon: Double) {
+        coordinates = Pair(lat, lon)
+        zipCode = null
+    }
+
+    fun loadForecast() {
+        if (!zipCode.isNullOrEmpty()) {
+            fetchForecast(zipCode!!)
+        } else if (coordinates != null) {
+            fetchForecastByCoordinates(coordinates!!.first, coordinates!!.second)
+        } else {
+            Log.e("WeatherViewModel", "No valid location data to load forecast.")
+        }
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.openweathermap.org/")
@@ -44,6 +67,17 @@ class WeatherViewModel : ViewModel() {
         }
     }
 
+    fun fetchWeatherByCoordinates(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            try {
+                val response = weatherApi.getCurrentWeatherByCoordinates(lat, lon, apiKey)
+                _weather.postValue(response)
+            } catch (e: Exception) {
+                Log.e("WeatherViewModel", "Weather by coordinates failed: ${e.message}", e)
+            }
+        }
+    }
+
     fun fetchForecast(zipCode: String) {
         viewModelScope.launch {
             try {
@@ -54,7 +88,31 @@ class WeatherViewModel : ViewModel() {
             }
         }
     }
+
+    fun fetchForecastByCoordinates(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            try {
+                val response = weatherApi.getDailyForecastByCoordinates(lat, lon, apiKey)
+                _forecast.postValue(response.list)
+            } catch (e: Exception) {
+                Log.e("WeatherViewModel", "Forecast (lat/lon) API call failed: ${e.message}", e)
+            }
+        }
+    }
+
+    private var currentLat: Double? = null
+    private var currentLon: Double? = null
+
+    fun setCurrentCoordinates(lat: Double, lon: Double) {
+        currentLat = lat
+        currentLon = lon
+    }
+
+    fun getCurrentCoordinates(): Pair<Double?, Double?> {
+        return Pair(currentLat, currentLon)
+    }
 }
+
 
 
 
